@@ -11,27 +11,28 @@
 
 /* Write your code here... */
 
-void createEmptyStack(tStackL* S) {
+void createEmptyStack(tStack* S) {
     S->top = SNULL;
 }
 
-bool isEmptyStack(tStackL S) {
-    return (S.top == SNULL);
-}
-
-bool push(tItemS item, tStackL* S) {
+bool push(tItemS d, tStack* S) {
     if(S->top == SMAX-1) {
         return false;
     }else{
         S->top++;
-        S->data[S->top] = item;
+        S->data[S->top] = d;
+        return true;
     }
 }
 
-void pop(tStackL* S){
+bool isEmptyStack(tStack S) {
+    return (S.top == SNULL);
+}
+
+void pop(tStack* S){
         S->top--;
 }
 
-tItemS peek(tStackL S) {
+tItemS peek(tStack S) {
     return S.data[S.top];
 }

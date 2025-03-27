@@ -12,6 +12,8 @@
 
 #include "types.h"
 #include "console_list.h"
+#define SNULL -1
+#define SMAX 25
 /* Write your code here... */
 typedef int tPosS;
 
@@ -21,13 +23,13 @@ typedef struct tItemS {
 }tItemS;
 
 typedef struct tStack {
-    tItemS data;
+    tItemS data[SMAX];
     tPosS top;
 } tStack;
 
-void createEmptyStack(tStack* stack);
-bool push(tItemS* d, tStack* stack);
-void pop(tStack* stack);
-tItemS* peek(tStack* stack);
-bool isEmptyStack(tStack* stack);
+void createEmptyStack(tStack* S);
+bool push(tItemS d, tStack* S);
+void pop(tStack* S);
+tItemS peek(tStack S);
+bool isEmptyStack(tStack S);
 #endif
