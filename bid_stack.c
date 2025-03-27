@@ -11,11 +11,11 @@
 
 /* Write your code here... */
 
-void createemptystack(tStackL* S) {
+void createEmptyStack(tStackL* S) {
     S->top = SNULL;
 }
 
-bool isemptystack(tStackL S) {
+bool isEmptyStack(tStackL S) {
     return (S.top == SNULL);
 }
 
