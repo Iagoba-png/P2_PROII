@@ -61,7 +61,7 @@ tPosL next(tPosL p, tList L) { //Si la posición introducida es la última o nul
   }
 }
 
-void updateItem( tItemL d, tPosL p, tList* L) {
+void updateItem( tItemS d, tPosL p, tList* L) {
   if (p!=LNULL) {//Condiciones para que se actualice el elemento
     p->data = d;
   }
@@ -86,7 +86,7 @@ bool checkPointer(tPosL p, tList L) {//Comprueba si el puntero p apunta a la lis
 
 }
 
-bool insertItem (tItemL d, tPosL p, tList* L){
+bool insertItem (tItemS d, tPosL p, tList* L){
 
   if (p!=LNULL&&checkPointer(p,*L)==true) {//Condición de p no nulo y apuntando a L
     if (p==*L){//Caso específico de que p apunte al primer elemento
@@ -143,7 +143,7 @@ void deleteAtPosition(tPosL p, tList* L){//Borra una casilla
   }
 }
 
-tItemL getItem (tPosL p, tList L){//Obtiene el elemento apuntado por p
+tItemS getItem (tPosL p, tList L){//Obtiene el elemento apuntado por p
   return p->data;
 }
 

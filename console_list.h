@@ -20,10 +20,18 @@
 #include "types.h"
 #define LNULL NULL
 
+typedef struct tItemL {
+ tUserId seller;
+ tConsoleId consoleId;
+ tConsoleBrand consoleBrand;
+ tConsolePrice consolePrice;
+ tBidCounter bidCounter;
+ tStack bidStack;
+} tItemL;
 
 typedef struct tNode* tPosL;
 typedef struct tNode {
- tItemS data;
+ tItemL data;
  tPosL next;
 } tNode;
 
