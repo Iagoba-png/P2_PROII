@@ -21,24 +21,24 @@
 #define LNULL NULL
 
 
-typedef struct tStack* tPosS;
-typedef struct tStack {
+typedef struct tNode* tPosL;
+typedef struct tNode {
  tItemS data;
- tPosS top;
-} tStack;
+ tPosL next;
+} tNode;
 
-typedef tPosS tList;
+typedef tPosL tList;
 
 void createEmptyList (tList* L);
 bool isEmptyList (tList L);
-tPosS first (tList L);
-tPosS last (tList L);
-tPosS next (tPosS p, tList L);
-tPosS previous (tPosS p, tList L);
-bool checkPointer(tPosS p, tList L);
-bool insertItem (tItemS d, tPosS p, tList* L);
-tItemS getItem (tPosS p, tList L);
-void updateItem (tItemS d, tPosS p, tList* L);
-tPosS findItem (tConsoleId, tList L);
-void deleteAtPosition(tPosS p, tList* L);
+tPosL first (tList L);
+tPosL last (tList L);
+tPosL next (tPosL p, tList L);
+tPosL previous (tPosL p, tList L);
+bool checkPointer(tPosL p, tList L);
+bool insertItem (tItemS d, tPosL p, tList* L);
+tItemS getItem (tPosL p, tList L);
+void updateItem (tItemS d, tPosL p, tList* L);
+tPosL findItem (tConsoleId, tList L);
+void deleteAtPosition(tPosL p, tList* L);
 #endif

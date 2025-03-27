@@ -13,11 +13,17 @@
 #include "types.h"
 #include "console_list.h"
 /* Write your code here... */
+typedef int tPosS;
 
 typedef struct tItemS {
     tUserId bidder;
     tConsolePrice price;
 }tItemS;
+
+typedef struct tStack {
+    tItemS data;
+    tPosS top;
+} tStack;
 
 void createEmptyStack(tStack* stack);
 bool push(tItemS* d, tStack* stack);
