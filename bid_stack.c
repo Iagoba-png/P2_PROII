@@ -35,8 +35,3 @@ void pop(tStackL* S){
 tItemS peek(tStackL S) {
     return S.data[S.top];
 }
-
-tItemS peek(tStackL S) {
-    return S->data;
-
-}
