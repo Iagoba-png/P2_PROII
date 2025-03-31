@@ -43,10 +43,10 @@ tPosL first (tList L);
 tPosL last (tList L);
 tPosL next (tPosL p, tList L);
 tPosL previous (tPosL p, tList L);
-bool checkPointer(tPosL p, tList L);
-bool insertItem (tItemS d, tPosL p, tList* L);
-tItemS getItem (tPosL p, tList L);
-void updateItem (tItemS d, tPosL p, tList* L);
+bool insertItem (tItemL d, tList* L);
+tItemL getItem (tPosL p, tList L);
+void updateItem (tItemL d, tPosL p, tList* L);
 tPosL findItem (tConsoleId, tList L);
 void deleteAtPosition(tPosL p, tList* L);
+tPosL nextOrderId(tConsoleId d, tList L);
 #endif

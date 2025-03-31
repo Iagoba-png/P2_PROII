@@ -11,7 +11,8 @@
 #define BID_STACK_H
 
 #include "types.h"
-#include "console_list.h"
+#include <stdbool.h>
+
 #define SNULL -1
 #define SMAX 25
 /* Write your code here... */
@@ -19,10 +20,10 @@ typedef int tPosS;
 
 typedef struct tItemS {
     tUserId bidder;
-    tConsolePrice price;
+    tConsolePrice consolePrice;
 }tItemS;
 
-typedef struct tStack {
+typedef struct{
     tItemS data[SMAX];
     tPosS top;
 } tStack;
