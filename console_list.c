@@ -69,12 +69,15 @@ void updateItem( tItemL d, tPosL p, tList* L) {
 
 
 bool insertItem (tItemL d, tList* L){
-  if (isEmptyList(*L)==true) {
-    return false;
-  }
   tPosL P=LNULL;
   P=malloc(sizeof(tItemL));
   P->data=d;
+  P->next=LNULL;
+
+  if (isEmptyList(*L)==true) {
+    *L=P;
+    return true;
+  }
 
   tPosL Q = findItem(P->data.consoleId,*L);
 
@@ -82,14 +85,22 @@ bool insertItem (tItemL d, tList* L){
     return false;
   }
   if (Q==LNULL) {//Caso de que d sea un nuevo item
-
     tPosL R = nextOrderId(d.consoleId,*L);
-    tPosL Y=previous(R,*L);
-    Y->next=P;
-    P->next=R;
-
-
-
+    if (R==LNULL) {
+      tPosL T = last(*L);
+      T->next=P;
+    }
+    else {
+      tPosL Y=previous(R,*L);
+      if (Y==LNULL) {
+        P->next=R;
+        *L=P;
+      }
+      else {
+        Y->next=P;
+        P->next=R;
+      }
+    }
     return true;
   }
   return false;
@@ -128,7 +139,7 @@ tPosL findItem(tConsoleId a, tList L){//Busca una consola por su id
 tPosL nextOrderId(tConsoleId d, tList L) {
   for (tPosL Q=L;Q!=LNULL;Q=Q->next){//Escanea la lista al completo si no encuentra "d"
     if (strcmp(Q->data.consoleId, d)<0) {//Si encuentra un id menor que "d" devuelve un puntero a su casilla
-      return Q;//
+      return Q;
     }
   }
 
