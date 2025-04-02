@@ -70,7 +70,7 @@ void updateItem( tItemL d, tPosL p, tList* L) {
 
 bool insertItem (tItemL d, tList* L){
   tPosL P=LNULL;
-  P=malloc(sizeof(tItemL));
+  P=malloc(sizeof(tNode));
   P->data=d;
   P->next=LNULL;
 
@@ -108,15 +108,17 @@ bool insertItem (tItemL d, tList* L){
 
 
 void deleteAtPosition(tPosL p, tList* L){//Borra una casilla
-  tPosL q;
-  q=previous(p,*L);//Selecciona la anterior, la enlaza con la siguiente a p y borra la seleccionada por p
-  if (q!=LNULL) {
-    q->next=p->next;
-    free(p);
-  }
-  else {//Si es la primera casilla L pasa a apuntar a la siguiente y borra la seleccionada por p
-    *L=(*L)->next;
-    free(p);
+  if(p->data.bidCounter==0){
+    tPosL q;
+    q=previous(p,*L);//Selecciona la anterior, la enlaza con la siguiente a p y borra la seleccionada por p
+    if (q!=LNULL) {
+      q->next=p->next;
+      free(p);
+    }
+    else {//Si es la primera casilla L pasa a apuntar a la siguiente y borra la seleccionada por p
+      *L=(*L)->next;
+      free(p);
+    }
   }
 }
 
@@ -138,7 +140,7 @@ tPosL findItem(tConsoleId a, tList L){//Busca una consola por su id
 
 tPosL nextOrderId(tConsoleId d, tList L) {
   for (tPosL Q=L;Q!=LNULL;Q=Q->next){//Escanea la lista al completo si no encuentra "d"
-    if (strcmp(Q->data.consoleId, d)<0) {//Si encuentra un id menor que "d" devuelve un puntero a su casilla
+    if (strcmp(Q->data.consoleId, d)>0) {//Si encuentra un id mayor que "d" devuelve un puntero a su casilla
       return Q;
     }
   }
