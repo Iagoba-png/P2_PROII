@@ -50,7 +50,7 @@ void new(char *commandNumber, char command, char *param1, char *param2, char *pa
 void delete(char *commandNumber, char command, char *param1, tList list){//Elimina el item indicado con su stack de pujas
     printf("********************\n%s %c: console %s \n", commandNumber, command, param1);
     tItemL item1=getItem(findItem(param1,list),list);
-    while (isEmptyStack(item1.bidStack)!=SNULL) {//Elimina el bid stack
+    while (isEmptyStack(item1.bidStack)!=true) {//Elimina el bid stack
         pop(&item1.bidStack);
     }
     item1.bidCounter=0;
@@ -79,9 +79,20 @@ void bid(char *commandNumber, char command, char *param1, char *param2, char *pa
     else printf("+ Error: Bid not possible\n");
 }
 
-void award(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList list) {
-    printf("********************\n%s %c: console %s seller %s brand %s price %s\n", commandNumber, command, param1, param2, param3, param4);
+void award(char *commandNumber, char command, char *param1, tList list) {
+    printf("********************\n%s %c: console %s\n", commandNumber, command, param1);
     tItemL item=getItem(findItem(param1, list),list);
+    if (findItem(item.consoleId,list)==LNULL||item.bidCounter==0) {
+        printf("+ Error: Award not possible\n");
+    }
+    else {
+        printf("********************\nAward: console %s bidder %s brand %s price %.2f\n", item.consoleId, item.bidStack.data->bidder, enumtochar(item.consoleBrand), item.bidStack.data->consolePrice);
+        while (isEmptyStack(item.bidStack)!=true) {//Elimina el bid stack
+            pop(&item.bidStack);
+        }
+        item.bidCounter=0;
+        deleteAtPosition(findItem(param1,list),&list);
+    }
 
 }
 
