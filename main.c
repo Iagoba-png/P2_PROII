@@ -16,6 +16,17 @@
 
 #define MAX_BUFFER 255
 
+float mean(tList list){
+    tPosL p=list;
+    float sum=0;
+    float count=0;
+    for (p;p->next!=NULL;p=p->next){
+        sum+=p->data.bidCounter;
+        count++;
+    }
+    return sum/count;
+}
+
 char *enumtochar(tConsoleBrand b) {//Convierte del tipo enum a cadena de caracteres
     if (b==nintendo) {
         return "nintendo";
@@ -23,7 +34,7 @@ char *enumtochar(tConsoleBrand b) {//Convierte del tipo enum a cadena de caracte
     else {return "sega";}
 }
 
-void new(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList list){//Inserta una nueva consola en la lista si el id no existía ya
+void New(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList list){//Inserta una nueva consola en la lista si el id no existía ya
     tItemL item;
     printf("********************\n%s %c: console %s seller %s brand %s price %s\n", commandNumber, command, param1, param2, param3, param4);
     strcpy(item.consoleId, param1);
@@ -47,7 +58,7 @@ void new(char *commandNumber, char command, char *param1, char *param2, char *pa
     }
 }
 
-void delete(char *commandNumber, char command, char *param1, tList list){//Elimina el item indicado con su stack de pujas
+void Delete(char *commandNumber, char command, char *param1, tList list){//Elimina el item indicado con su stack de pujas
     printf("********************\n%s %c: console %s \n", commandNumber, command, param1);
     tItemL item1=getItem(findItem(param1,list),list);
     while (isEmptyStack(item1.bidStack)!=true) {//Elimina el bid stack
@@ -63,7 +74,7 @@ void delete(char *commandNumber, char command, char *param1, tList list){//Elimi
     }
 }
 
-void bid(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList list) {
+void Bid(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList list) {
     printf("********************\n%s %c: console %s bidder %s brand %s bid %s\n", commandNumber, command, param1, param2, param3, param4);
 
     tItemL itemL=getItem(findItem(param1,list),list);
@@ -79,7 +90,7 @@ void bid(char *commandNumber, char command, char *param1, char *param2, char *pa
     else printf("+ Error: Bid not possible\n");
 }
 
-void award(char *commandNumber, char command, char *param1, tList list) {
+void Award(char *commandNumber, char command, char *param1, tList list) {
     printf("********************\n%s %c: console %s\n", commandNumber, command, param1);
     tItemL item=getItem(findItem(param1, list),list);
     if (findItem(item.consoleId,list)==LNULL||item.bidCounter==0) {
@@ -87,7 +98,7 @@ void award(char *commandNumber, char command, char *param1, tList list) {
     }
     else {
         printf("********************\nAward: console %s bidder %s brand %s price %.2f\n", item.consoleId, item.bidStack.data->bidder, enumtochar(item.consoleBrand), item.bidStack.data->consolePrice);
-        while (isEmptyStack(item.bidStack)!=true) {//Elimina el bid stack
+        while (isEmptyStack(item.bidStack)!=true) {//Elimina las pujas
             pop(&item.bidStack);
         }
         item.bidCounter=0;
@@ -96,13 +107,34 @@ void award(char *commandNumber, char command, char *param1, tList list) {
 
 }
 
-void stats(char *commandNumber, char command, tList list) {
+void InvalidateBids(char *commandNumber, char command, tList list){
+    printf("********************\n%s %c\n", commandNumber, command);
+    float mean2=mean(list)*2;
+    tPosL p=list;
+    int count=0;
+    for (p;next(p,list)!=NULL;p=next(p,list)){
+        if (p->data.bidCounter>mean2){
+            printf("* InvalidateBids: console %s seller %s brand %s price %f bids %d average bids %.2f\n",p->data.consoleId, p->data.seller, enumtochar(p->data.consoleBrand), p->data.consolePrice, p->data.bidCounter, mean(list));
+            while (isEmptyStack(p->data.bidStack)!=true) {//Elimina las pujas
+                pop(&p->data.bidStack);
+            }
+            p->data.bidCounter=0;
+            count++;
+        }
+    }
+    if (count==0||isEmptyList(list)==true){
+        printf("+ Error: InvalidateBids not possible\n");
+    }
+
+}
+
+void Stats(char *commandNumber, char command, tList list) {
     printf("********************\n%s %c\n", commandNumber, command);
     int n=0,s=0;
     float sumn=0,sums=0;
     tPosL p=first(list);
     if (isEmptyList(list)==false) {
-        for(p;p!=LNULL;p=next(p,list)) {
+        for(p;next(p,list)!=LNULL;p=next(p,list)) {
             printf("Console %s seller %s brand %s price %.2f bids %d top bidder %.2f\n",getItem(p,list).consoleId,getItem(p,list).seller,enumtochar(getItem(p,list).consoleBrand),getItem(p,list).consolePrice,getItem(p,list).bidCounter, getItem(p,list).bidStack.data->consolePrice);
         }
         p=first(list);
@@ -122,22 +154,32 @@ void stats(char *commandNumber, char command, tList list) {
     else printf("+ Error: Stats not possible\n");
 }
 
+void Remove(char *commandNumber, char command, tList list){
+    printf("********************\n%s %c\n", commandNumber, command);
+    tPosL p=list;
+    for (p;next(p,list)!=LNULL;p=next(p,list)){
+        if (p->data.bidCounter==0) {
+            printf("Removing console %s seller %s brand %s price %f bids %d",p->data.consoleId, p->data.seller, enumtochar(p->data.consoleBrand), p->data.consolePrice, p->data.bidCounter);
+        }
+    }
+}
+
 void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList list) {
 
     switch (command) {
-        case 'N':new(commandNumber, command, param1, param2, param3, param4, list);
+        case 'N':New(commandNumber, command, param1, param2, param3, param4, list);
             break;
-        case 'D':delete(commandNumber, command, param1, list);
+        case 'D':Delete(commandNumber, command, param1, list);
             break;
-        case 'B':bid(commandNumber, command, param1, param2, param3, param4, list);
+        case 'B':Bid(commandNumber, command, param1, param2, param3, param4, list);
             break;
-        case 'A':
+        case 'A':Award(commandNumber,command,param1,list);
             break;
-        case 'R':
+        case 'R':Remove(commandNumber,command,list);
             break;
-        case 'S':stats(commandNumber, command, list);
+        case 'S':Stats(commandNumber, command, list);
             break;
-        case 'I':
+        case 'I':InvalidateBids(commandNumber, command, list);
             break;
         default:
             break;
