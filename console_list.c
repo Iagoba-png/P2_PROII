@@ -81,12 +81,9 @@ bool insertItem (tItemL d, tList* L){
 
   tPosL Q = findItem(P->data.consoleId,*L);
 
-  if (Q!=LNULL) {//Compruebo si d existe ya en la lista
-    return false;
-  }
   if (Q==LNULL) {//Caso de que d sea un nuevo item
     tPosL R = nextOrderId(d.consoleId,*L);
-    if (R==LNULL) {
+    if (R==LNULL) {//
       tPosL T = last(*L);
       T->next=P;
     }
