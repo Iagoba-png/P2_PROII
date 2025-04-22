@@ -134,7 +134,7 @@ void Stats(char *commandNumber, char command, tList list) {
     float sumn=0,sums=0;
     tPosL p=first(list);
     if (isEmptyList(list)==false) {
-        for(p;next(p,list)!=LNULL;p=next(p,list)) {
+        for(p;p!=LNULL;p=next(p,list)) {
             printf("Console %s seller %s brand %s price %.2f bids %d top bidder %.2f\n",getItem(p,list).consoleId,getItem(p,list).seller,enumtochar(getItem(p,list).consoleBrand),getItem(p,list).consolePrice,getItem(p,list).bidCounter, getItem(p,list).bidStack.data->consolePrice);
         }
         p=first(list);
