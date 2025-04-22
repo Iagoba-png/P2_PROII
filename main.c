@@ -16,6 +16,12 @@
 
 #define MAX_BUFFER 255
 
+float average(float total, int casos) {
+    if (casos==0) return 0;
+    return total/casos;
+}
+
+
 float mean(tList list){
     tPosL p=list;
     float sum=0;
@@ -50,7 +56,7 @@ void New(char *commandNumber, char command, char *param1, char *param2, char *pa
     createEmptyStack(&item.bidStack);
 
     if (insertItem(item,&list)==true) {
-        printf("New: console %s seller %s brand %s price %s\n",param1, param2, param3, param4);
+        printf("* New: console %s seller %s brand %s price %.2f\n",item.consoleId, item.seller, enumtochar(item.consoleBrand), item.consolePrice);
     }
 
     else {
@@ -149,7 +155,7 @@ void Stats(char *commandNumber, char command, tList list) {
             }
             p=next(p,list);
         }
-        printf("Brand     Consoles    Price  Average\nNintendo  %8d %8.2f %8.2f\nSega      %8d %8.2f %8.2f\n", n, sumn, sumn/n, s, sums, sums/s);
+        printf("Brand     Consoles    Price  Average\nNintendo  %8d %8.2f %8.2f\nSega      %8d %8.2f %8.2f\n", n, sumn, average(sumn,n) , s, sums, average(sums,s));
     }
     else printf("+ Error: Stats not possible\n");
 }
@@ -176,9 +182,9 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
             break;
         case 'B':Bid(commandNumber, command, param1, param2, param3, param4, list);
             break;
-        case 'A':Award(commandNumber,command,param1,list);
+        case 'A':Award(commandNumber,command,param1, list);
             break;
-        case 'R':Remove(commandNumber,command,list);
+        case 'R':Remove(commandNumber,command, list);
             break;
         case 'S':Stats(commandNumber, command, list);
             break;
@@ -213,6 +219,7 @@ void readTasks(char *filename, tList list) {
         }
 
         fclose(f);
+
 
     } else {
         printf("Cannot open file %s.\n", filename);

@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
-  "C:/Users/USUARIO/CLionProjects/P2_PROII/bin/test_bid_stack.exe"
-  "C:/Users/USUARIO/CLionProjects/P2_PROII/bin/test_bid_stack.exe.manifest"
-  "C:/Users/USUARIO/CLionProjects/P2_PROII/bin/test_bid_stack.pdb"
+  "C:/Users/122124/CLionProjects/P2_PROII/bin/test_bid_stack.exe"
+  "C:/Users/122124/CLionProjects/P2_PROII/bin/test_bid_stack.exe.manifest"
+  "C:/Users/122124/CLionProjects/P2_PROII/bin/test_bid_stack.pdb"
   "CMakeFiles/test_bid_stack.dir/bid_stack.c.obj"
   "CMakeFiles/test_bid_stack.dir/bid_stack.c.obj.d"
   "CMakeFiles/test_bid_stack.dir/test_bid_stack.c.obj"
