@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="142610ad-7428-4ed7-8fc3-16cd17d70bb5" name="10.11.28.50">
+        <fileTransfer rootFolder="/home/UDC/122124/linux" accessType="SFTP" host="10.11.28.50" port="22" sshConfigId="5dd82dd3-707d-4f42-a28e-9bd20e60b0c9" sshConfig="iago.alcoba@udc.es@10.11.28.50:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

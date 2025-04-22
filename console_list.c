@@ -68,37 +68,52 @@ void updateItem( tItemL d, tPosL p, tList* L) {
 }
 
 
-bool insertItem (tItemL d, tList* L){
-  tPosL P=LNULL;
-  P=malloc(sizeof(tNode));
-  P->data=d;
-  P->next=LNULL;
+bool insertItem (tItemL d, tList* L)
+{
+  tPosL Q = findItem(d.consoleId,*L);
 
-  if (isEmptyList(*L)==true) {
-    *L=P;
-    return true;
-  }
+  if (Q==LNULL)
+  {
+    //Caso de que d sea un nuevo item
+    tPosL p = nextOrderId(d.consoleId,*L);
+    if (p!=LNULL) {//Condición de p no nulo
+      if (p==*L){//Caso específico de que p apunte al primer elemento
+        tPosL M;
+        M=LNULL;
+        M=malloc(sizeof(tNode));//Creación de una nueva casilla
+        M->data=d;
+        M->next=*L;//La nueva casilla apunta a la antigua primera casilla
+        *L=M;//La nueva casilla se convierte en la primera
 
-  tPosL Q = findItem(P->data.consoleId,*L);
-
-  if (Q==LNULL) {//Caso de que d sea un nuevo item
-    tPosL R = nextOrderId(d.consoleId,*L);
-    if (R==LNULL) {//
-      tPosL T = last(*L);
-      T->next=P;
-    }
-    else {
-      tPosL Y=previous(R,*L);
-      if (Y==LNULL) {
-        P->next=R;
-        *L=P;
+        return true;
       }
-      else {
-        Y->next=P;
-        P->next=R;
-      }
+      tPosL R, Y;
+      R=LNULL;
+      Y=malloc(sizeof(tNode));//Creación de una nueva casilla
+      R=previous(p,*L);//R apunta al elemento anterior de p
+      Y->next=p;//La nueva casilla apunta a la posicion p
+      Y->data=d;
+      R->next=Y;//La nueva casilla es la siguiente a la apuntada por R
+      return true;
     }
-    return true;
+    if (p==LNULL) {//Caso p=NULL
+      tPosL T;
+      T=LNULL;
+      T=malloc(sizeof(struct tNode));//Creación de una nueva casilla
+      T->data=d;
+      T->next=LNULL;
+      if (isEmptyList(*L)==true) {//Caso de que sea la primera casilla
+        *L=T;
+        return true;
+      }
+      if (isEmptyList(*L)==false) {
+        tPosL S;
+        S=last(*L);//S apunta a la última casilla
+        S->next=T;//T se coloca después de la última casilla
+        return true;
+      }
+
+    }
   }
   return false;
 }

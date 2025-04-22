@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/EQUIPO/CLionProjects/P2_PROII/console_list.c" "CMakeFiles/test_console_list.dir/console_list.c.obj" "gcc" "CMakeFiles/test_console_list.dir/console_list.c.obj.d"
-  "C:/Users/EQUIPO/CLionProjects/P2_PROII/test_console_list.c" "CMakeFiles/test_console_list.dir/test_console_list.c.obj" "gcc" "CMakeFiles/test_console_list.dir/test_console_list.c.obj.d"
+  "C:/Users/122124/CLionProjects/P2_PROII/console_list.c" "CMakeFiles/test_console_list.dir/console_list.c.obj" "gcc" "CMakeFiles/test_console_list.dir/console_list.c.obj.d"
+  "C:/Users/122124/CLionProjects/P2_PROII/test_console_list.c" "CMakeFiles/test_console_list.dir/test_console_list.c.obj" "gcc" "CMakeFiles/test_console_list.dir/test_console_list.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

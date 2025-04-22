@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
-  "C:/Users/EQUIPO/CLionProjects/P2_PROII/bin/test_console_list.exe"
-  "C:/Users/EQUIPO/CLionProjects/P2_PROII/bin/test_console_list.exe.manifest"
-  "C:/Users/EQUIPO/CLionProjects/P2_PROII/bin/test_console_list.pdb"
+  "C:/Users/122124/CLionProjects/P2_PROII/bin/test_console_list.exe"
+  "C:/Users/122124/CLionProjects/P2_PROII/bin/test_console_list.exe.manifest"
+  "C:/Users/122124/CLionProjects/P2_PROII/bin/test_console_list.pdb"
   "CMakeFiles/test_console_list.dir/console_list.c.obj"
   "CMakeFiles/test_console_list.dir/console_list.c.obj.d"
   "CMakeFiles/test_console_list.dir/test_console_list.c.obj"
