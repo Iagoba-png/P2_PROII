@@ -1,5 +1,5 @@
 CMakeFiles/main.dir/main.c.obj: \
- C:\Users\USUARIO\CLionProjects\P2_PROII\main.c \
+ C:\Users\EQUIPO\CLionProjects\P2_PROII\main.c \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.2/bin/mingw/x86_64-w64-mingw32/include/stdio.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.2/bin/mingw/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.2/bin/mingw/x86_64-w64-mingw32/include/corecrt.h \
@@ -23,7 +23,7 @@ CMakeFiles/main.dir/main.c.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.2/bin/mingw/x86_64-w64-mingw32/include/errno.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.2/bin/mingw/x86_64-w64-mingw32/include/string.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.2/bin/mingw/x86_64-w64-mingw32/include/sec_api/string_s.h \
- C:\Users\USUARIO\CLionProjects\P2_PROII\types.h \
- C:\Users\USUARIO\CLionProjects\P2_PROII\console_list.h \
- C:\Users\USUARIO\CLionProjects\P2_PROII\bid_stack.h \
+ C:\Users\EQUIPO\CLionProjects\P2_PROII\types.h \
+ C:\Users\EQUIPO\CLionProjects\P2_PROII\console_list.h \
+ C:\Users\EQUIPO\CLionProjects\P2_PROII\bid_stack.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.2/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stdbool.h

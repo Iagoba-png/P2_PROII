@@ -165,6 +165,9 @@ void Remove(char *commandNumber, char command, tList list){
 }
 
 void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList list) {
+    if(atoi(commandNumber) == 1) {
+        createEmptyList(&list);
+    }
 
     switch (command) {
         case 'N':New(commandNumber, command, param1, param2, param3, param4, list);
@@ -219,7 +222,7 @@ void readTasks(char *filename, tList list) {
 
 int main(int nargs, char **args) {
     tList list;
-    createEmptyList(&list);
+
 
     char *file_name = "new.txt";
 
