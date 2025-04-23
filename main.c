@@ -34,7 +34,7 @@ char *enumtochar(tConsoleBrand b) {//Convierte del tipo enum a cadena de caracte
     else {return "sega";}
 }
 
-void New(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList* list){//Inserta una nueva consola en la lista si el id no existía ya
+void New(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList list){//Inserta una nueva consola en la lista si el id no existía ya
     tItemL item;
     printf("********************\n%s %c: console %s seller %s brand %s price %s\n", commandNumber, command, param1, param2, param3, param4);
     strcpy(item.consoleId, param1);
@@ -49,7 +49,7 @@ void New(char *commandNumber, char command, char *param1, char *param2, char *pa
     item.bidCounter=0;
     createEmptyStack(&item.bidStack);
 
-    if (insertItem(item,list)==true) {
+    if (insertItem(item, nextOrderId(item.consoleId,list), &list)==true) {
         printf("New: console %s seller %s brand %s price %s\n",param1, param2, param3, param4);
     }
 

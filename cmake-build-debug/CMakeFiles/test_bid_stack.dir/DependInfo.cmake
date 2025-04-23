@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/122124/CLionProjects/P2_PROII/bid_stack.c" "CMakeFiles/test_bid_stack.dir/bid_stack.c.obj" "gcc" "CMakeFiles/test_bid_stack.dir/bid_stack.c.obj.d"
-  "C:/Users/122124/CLionProjects/P2_PROII/test_bid_stack.c" "CMakeFiles/test_bid_stack.dir/test_bid_stack.c.obj" "gcc" "CMakeFiles/test_bid_stack.dir/test_bid_stack.c.obj.d"
+  "C:/Users/EQUIPO/CLionProjects/P2_PROII/bid_stack.c" "CMakeFiles/test_bid_stack.dir/bid_stack.c.obj" "gcc" "CMakeFiles/test_bid_stack.dir/bid_stack.c.obj.d"
+  "C:/Users/EQUIPO/CLionProjects/P2_PROII/test_bid_stack.c" "CMakeFiles/test_bid_stack.dir/test_bid_stack.c.obj" "gcc" "CMakeFiles/test_bid_stack.dir/test_bid_stack.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
