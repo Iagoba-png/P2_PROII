@@ -68,14 +68,13 @@ void updateItem( tItemL d, tPosL p, tList* L) {
 }
 
 
-bool insertItem (tItemL d, tList* L)
-{
-  tPosL Q = findItem(d.consoleId,*L);
-
-  if (Q==LNULL)
-  {
+bool insertItem (tItemL d, tList* L){
+  tPosL Q=LNULL;
+  Q=findItem(d.consoleId,*L);
+  if (Q==LNULL){
     //Caso de que d sea un nuevo item
-    tPosL p = nextOrderId(d.consoleId,*L);
+    tPosL p = LNULL;
+    p=nextOrderId(d.consoleId,*L);
     if (p!=LNULL) {//Condición de p no nulo
       if (p==*L){//Caso específico de que p apunte al primer elemento
         tPosL M;
@@ -115,6 +114,7 @@ bool insertItem (tItemL d, tList* L)
 
     }
   }
+
   return false;
 }
 
@@ -139,22 +139,26 @@ tItemL getItem (tPosL p, tList L){//Obtiene el elemento apuntado por p
 }
 
 tPosL findItem(tConsoleId a, tList L){//Busca una consola por su id
-
+if (L!=LNULL){
   for (tPosL Q=L;Q!=LNULL;Q=Q->next){//Escanea la lista al completo si no encuentra "a"
     if (strcmp(Q->data.consoleId, a)==0) {//Si encuentra "a" devuelve un puntero a su casilla
       return Q;
     }
   }
+}
 
   return LNULL;////Si no encuentra "a" devuelve un valor nulo
 
 }
 
 tPosL nextOrderId(tConsoleId d, tList L) {
-  for (tPosL Q=L;Q!=LNULL;Q=Q->next){//Escanea la lista al completo si no encuentra "d"
+  tPosL Q=LNULL;
+  Q=L;
+  while (Q!=LNULL){//Escanea la lista al completo si no encuentra "d"
     if (strcmp(Q->data.consoleId, d)>0) {//Si encuentra un id mayor que "d" devuelve un puntero a su casilla
       return Q;
     }
+    Q=Q->next;
   }
 
   return LNULL;////Si no encuentra "d" devuelve un valor nulo
