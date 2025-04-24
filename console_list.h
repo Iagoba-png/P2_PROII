@@ -43,7 +43,7 @@ tPosL first (tList L);
 tPosL last (tList L);
 tPosL next (tPosL p, tList L);
 tPosL previous (tPosL p, tList L);
-bool insertItem (tItemL d, tPosL p, tList* L);
+bool insertItem (tItemL d, tList* L);
 tItemL getItem (tPosL p, tList L);
 void updateItem (tItemL d, tPosL p, tList* L);
 tPosL findItem (tConsoleId, tList L);

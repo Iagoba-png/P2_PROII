@@ -5,7 +5,7 @@
       <paths name="10.11.28.50">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="C:\Users\USUARIO\CLionProjects\P2_PROII" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

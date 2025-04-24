@@ -68,43 +68,49 @@ void updateItem( tItemL d, tPosL p, tList* L) {
 }
 
 
-bool insertItem (tItemL d, tPosL p, tList* L){
+bool insertItem (tItemL d, tList* L){
+  tPosL Q;
+  Q = findItem(d.consoleId,*L);
 
-  if (p!=LNULL) {//Condición de p no nulo
-    if (p==*L){//Caso específico de que p apunte al primer elemento
-      tPosL M;
-      M=LNULL;
-      M=malloc(sizeof(tNode));//Creación de una nueva casilla
-      M->data=d;
-      M->next=*L;//La nueva casilla apunta a la antigua primera casilla
-      *L=M;//La nueva casilla se convierte en la primera
+  if(Q==LNULL) {
+    tPosL p=LNULL;
+    p=nextOrderId(d.consoleId,*L);
+    if (p!=LNULL) {//Condición de p no nulo
+      if (p==*L){//Caso específico de que p apunte al primer elemento
+        tPosL M;
+        M=LNULL;
+        M=malloc(sizeof(tNode));//Creación de una nueva casilla
+        M->data=d;
+        M->next=*L;//La nueva casilla apunta a la antigua primera casilla
+        *L=M;//La nueva casilla se convierte en la primera
 
+        return true;
+      }
+      tPosL R, Y;
+      R=LNULL;
+      Y=malloc(sizeof(tNode));//Creación de una nueva casilla
+      R=previous(p,*L);//R apunta al elemento anterior de p
+      Y->next=p;//La nueva casilla apunta a la posicion p
+      Y->data=d;
+      R->next=Y;//La nueva casilla es la siguiente a la apuntada por R
       return true;
     }
-    tPosL R, Y;
-    R=LNULL;
-    Y=malloc(sizeof(tNode));//Creación de una nueva casilla
-    R=previous(p,*L);//R apunta al elemento anterior de p
-    Y->next=p;//La nueva casilla apunta a la posicion p
-    Y->data=d;
-    R->next=Y;//La nueva casilla es la siguiente a la apuntada por R
-    return true;
-  }
-  if (p==LNULL) {//Caso p=NULL
-    tPosL T;
-    T=LNULL;
-    T=malloc(sizeof(tNode));//Creación de una nueva casilla
-    T->data=d;
-    T->next=LNULL;
-    if (isEmptyList(*L)==true) {//Caso de que sea la primera casilla
-      *L=T;
-      return true;
-    }
-    if (isEmptyList(*L)==false) {
-      tPosL S;
-      S=last(*L);//S apunta a la última casilla
-      S->next=T;//T se coloca después de la última casilla
-      return true;
+    if (p==LNULL) {//Caso p=NULL
+      tPosL T;
+      T=LNULL;
+      T=malloc(sizeof(tNode));//Creación de una nueva casilla
+      T->data=d;
+      T->next=LNULL;
+      if (isEmptyList(*L)==true) {//Caso de que sea la primera casilla
+        *L=T;
+        return true;
+      }
+      if (isEmptyList(*L)==false) {
+        tPosL S;
+        S=last(*L);//S apunta a la última casilla
+        S->next=T;//T se coloca después de la última casilla
+        return true;
+      }
     }
   }
 

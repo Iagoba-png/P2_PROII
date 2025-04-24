@@ -15,12 +15,28 @@
 #include "console_list.h"
 
 #define MAX_BUFFER 255
+void print_list(tList list)
+{
+    tPosL pos;
+    tItemL item;
+
+    printf("(");
+    if (!isEmptyList(list)) {
+        pos = first(list);
+        while (pos != LNULL) {
+            item = getItem(pos, list);
+            printf(" %s price %.2f", item.consoleId, item.consolePrice);
+            pos = next(pos, list);
+        }
+    }
+    printf(" )\n");
+}
 
 float mean(tList list){
     tPosL p=list;
     float sum=0;
     float count=0;
-    for (p;p->next!=NULL;p=p->next){
+    for (p;next(p,list)!=NULL;p=next(p,list)){
         sum+=p->data.bidCounter;
         count++;
     }
@@ -34,7 +50,7 @@ char *enumtochar(tConsoleBrand b) {//Convierte del tipo enum a cadena de caracte
     else {return "sega";}
 }
 
-void New(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList list){//Inserta una nueva consola en la lista si el id no existía ya
+void New(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList* list){//Inserta una nueva consola en la lista si el id no existía ya
     tItemL item;
     printf("********************\n%s %c: console %s seller %s brand %s price %s\n", commandNumber, command, param1, param2, param3, param4);
     strcpy(item.consoleId, param1);
@@ -49,8 +65,8 @@ void New(char *commandNumber, char command, char *param1, char *param2, char *pa
     item.bidCounter=0;
     createEmptyStack(&item.bidStack);
 
-    if (insertItem(item, nextOrderId(item.consoleId,list), &list)==true) {
-        printf("New: console %s seller %s brand %s price %s\n",param1, param2, param3, param4);
+    if (insertItem(item, list)==true) {
+        printf("* New: console %s seller %s brand %s price %s\n",param1, param2, param3, param4);
     }
 
     else {
@@ -128,26 +144,26 @@ void InvalidateBids(char *commandNumber, char command, tList list){
 
 }
 
-void Stats(char *commandNumber, char command, tList list) {
+void Stats(char *commandNumber, char command, tList* list) {
     printf("********************\n%s %c\n", commandNumber, command);
-    int n=0,s=0;
-    float sumn=0,sums=0;
-    tPosL p=first(list);
-    if (isEmptyList(list)==false) {
-        for(p;p!=LNULL;p=next(p,list)) {
-            printf("Console %s seller %s brand %s price %.2f bids %d top bidder %.2f\n",getItem(p,list).consoleId,getItem(p,list).seller,enumtochar(getItem(p,list).consoleBrand),getItem(p,list).consolePrice,getItem(p,list).bidCounter, getItem(p,list).bidStack.data->consolePrice);
+    int n=0,s=0;//Numero de consolas de cada marca
+    float sumn=0,sums=0;//Suma de los precios de cada marca
+    tPosL p=first(*list);//Preparo para recorrer la lista
+    if (isEmptyList(*list)==false) {
+        for(p;p!=LNULL;p=next(p,*list)) {
+            printf("Console %s seller %s brand %s price %.2f bids %d top bidder %.2f\n",getItem(p,*list).consoleId,getItem(p,list).seller,enumtochar(getItem(p,list).consoleBrand),getItem(p,list).consolePrice,getItem(p,list).bidCounter, getItem(p,list).bidStack.data->consolePrice);
         }
-        p=first(list);
+        p=first(*list);
         while (p!=LNULL) {
-            if(getItem(p,list).consoleBrand==nintendo) {
+            if(getItem(p,*list).consoleBrand==nintendo) {
                 n++;
-                sumn+=getItem(p,list).consolePrice;
+                sumn+=getItem(p,*list).consolePrice;
             }
             else {
                 s++;
-                sums+=getItem(p,list).consolePrice;
+                sums+=getItem(p,*list).consolePrice;
             }
-            p=next(p,list);
+            p=next(p,*list);
         }
         printf("Brand     Consoles    Price  Average\nNintendo  %8d %8.2f %8.2f\nSega      %8d %8.2f %8.2f\n", n, sumn, sumn/n, s, sums, sums/s);
     }
@@ -164,22 +180,22 @@ void Remove(char *commandNumber, char command, tList list){
     }
 }
 
-void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList list) {
+void processCommand(char *commandNumber, char command, char *param1, char *param2, char *param3, char *param4, tList *list) {
 
     switch (command) {
         case 'N':New(commandNumber, command, param1, param2, param3, param4, list);
             break;
-        case 'D':Delete(commandNumber, command, param1, list);
+        case 'D':Delete(commandNumber, command, param1, *list);
             break;
-        case 'B':Bid(commandNumber, command, param1, param2, param3, param4, list);
+        case 'B':Bid(commandNumber, command, param1, param2, param3, param4, *list);
             break;
-        case 'A':Award(commandNumber,command,param1,list);
+        case 'A':Award(commandNumber,command,param1,*list);
             break;
-        case 'R':Remove(commandNumber,command,list);
+        case 'R':Remove(commandNumber,command,*list);
             break;
         case 'S':Stats(commandNumber, command, list);
             break;
-        case 'I':InvalidateBids(commandNumber, command, list);
+        case 'I':InvalidateBids(commandNumber, command, *list);
             break;
         default:
             break;
@@ -187,7 +203,7 @@ void processCommand(char *commandNumber, char command, char *param1, char *param
 }
 
 
-void readTasks(char *filename, tList list) {
+void readTasks(char *filename, tList *list) {
 
     FILE *f = NULL;
     char *commandNumber, *command, *param1, *param2, *param3, *param4;
@@ -232,7 +248,7 @@ int main(int nargs, char **args) {
         #endif
     }
 
-    readTasks(file_name, list);
+    readTasks(file_name, &list);
 
     return 0;
 }
