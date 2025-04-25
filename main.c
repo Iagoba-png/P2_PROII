@@ -32,6 +32,10 @@ void print_list(tList list)
     printf(" )\n");
 }
 
+float priceRatio(tItemL d){
+    return 100*(peek(d.bidStack).consolePrice/d.consolePrice);
+}
+
 float mean(tList list){
     tPosL p=list;
     float sum=0;
@@ -149,23 +153,37 @@ void Stats(char *commandNumber, char command, tList* list) {
     int n=0,s=0;//Numero de consolas de cada marca
     float sumn=0,sums=0;//Suma de los precios de cada marca
     tPosL p=first(*list);//Preparo para recorrer la lista
-    if (isEmptyList(*list)==false) {
-        for(p;p!=LNULL;p=next(p,*list)) {
-            printf("Console %s seller %s brand %s price %.2f bids %d top bidder %.2f\n",getItem(p,*list).consoleId,getItem(p,list).seller,enumtochar(getItem(p,list).consoleBrand),getItem(p,list).consolePrice,getItem(p,list).bidCounter, getItem(p,list).bidStack.data->consolePrice);
-        }
-        p=first(*list);
-        while (p!=LNULL) {
-            if(getItem(p,*list).consoleBrand==nintendo) {
+    tItemL topincrease=getItem(first(*list),*list);//Variable que va a copiar la consola con un mayor incremento de precio porcentual
+
+    if (isEmptyList(*list)==false)
+    {
+        //Condición para que stats imprima los datos
+        for(p;p!=LNULL;p=next(p,*list)){//Recorro la lista
+            tItemL item=getItem(p,*list);//Variable para usar en cada iteración del "for"
+            if (item.bidCounter!=0){//Imprimo la lista con un mensaje diferente dependiendo de si tiene pujas
+                printf("Console %s seller %s brand %s price %.2f bids %d top bidder %.2f\n",item.consoleId,item.seller,enumtochar(item.consoleBrand),item.consolePrice,item.bidCounter,peek(item.bidStack).consolePrice);
+            }
+            else printf("Console %s seller %s brand %s price %.2f. No bids\n",item.consoleId,item.seller,enumtochar(item.consoleBrand),item.consolePrice);
+
+            if(item.consoleBrand==nintendo) {//Almaceno los datos de las consolas
                 n++;
-                sumn+=getItem(p,*list).consolePrice;
+                sumn+=item.consolePrice;
             }
             else {
                 s++;
-                sums+=getItem(p,*list).consolePrice;
+                sums+=item.consolePrice;
             }
-            p=next(p,*list);
+
+            if (priceRatio(item)>priceRatio(topincrease)){//Se queda con la diferencia porcentual más alta
+                topincrease=item;
+            }
         }
+
         printf("Brand     Consoles    Price  Average\nNintendo  %8d %8.2f %8.2f\nSega      %8d %8.2f %8.2f\n", n, sumn, sumn/n, s, sums, sums/s);
+        if (topincrease.bidCounter!=0){
+            printf("Top bid: console %s seller %s brand %s price %.2f bidder %s top price %.2f increase %.2f\n",topincrease.consoleId, topincrease.seller, enumtochar(topincrease.consoleBrand), topincrease.consolePrice, peek(topincrease.bidStack).bidder, peek(topincrease.bidStack).consolePrice, priceRatio(topincrease));
+        }
+        else printf("Top bid not possible\n");
     }
     else printf("+ Error: Stats not possible\n");
 }
