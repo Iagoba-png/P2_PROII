@@ -11,12 +11,12 @@
 
 /* Write your code here... */
 
-void createEmptyStack(tStack* S) {
+void createEmptyStack(tStack* S) {//Inicializa top en -1
     S->top = SNULL;
 }
 
-bool push(tItemS d, tStack* S) {
-    if(S->top == SMAX-1) {
+bool push(tItemS d, tStack* S) {//Introduce un elemento en el stack
+    if(S->top == SMAX-1) {//Comprueba si la lista está llena
         return false;
     }else{
         S->top++;
@@ -25,14 +25,19 @@ bool push(tItemS d, tStack* S) {
     }
 }
 
-bool isEmptyStack(tStack S) {
+bool isEmptyStack(tStack S) {//Compara el valor de top con -1
     return (S.top == SNULL);
 }
 
-void pop(tStack* S){
+void pop(tStack* S){//Elimina el primer elemento del stack
+    if (isEmptyStack(*S)!=true)
+    {
         S->top--;
+    }
 }
 
-tItemS peek(tStack S) {
-    return S.data[S.top];
+tItemS peek(tStack S) {//Devuelve el primer elemento del stack
+    if (isEmptyStack(S)!=true){
+        return S.data[S.top];
+    }
 }
