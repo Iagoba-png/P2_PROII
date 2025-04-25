@@ -1,10 +1,10 @@
 /*
- * TITLE: PROGRAMMING II LABS
+* TITLE: PROGRAMMING II LABS
  * SUBTITLE: Practical 2
- * AUTHOR 1: ***************************** LOGIN 1: **********
- * AUTHOR 2: ***************************** LOGIN 2: **********
- * GROUP: *.*
- * DATE: ** / ** / **
+ * AUTHOR 1: Iago Bescansa Alcoba LOGIN 1: iago.alcoba
+ * AUTHOR 2: Daniel Marrero Sánchez LOGIN 2: daniel.marrero.sanchez
+ * GROUP: 1.2
+ * DATE: 25 / 04 / 2025
  */
 
 #ifndef CONSOLE_LIST_H
