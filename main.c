@@ -80,6 +80,7 @@ void Delete(char *commandNumber, char command, char *param1, tList *list){
             pop(&item1.bidStack);
         }
         item1.bidCounter=0;
+        updateItem(item1,Q,list);
         deleteAtPosition(Q,list);
         if (findItem(param1,*list)==LNULL) {
             printf("Delete: console %s seller %s brand %s price %.2f bids %d\n",item1.consoleId,item1.seller,enumtochar(item1.consoleBrand), item1.consolePrice,item1.bidCounter);
@@ -131,11 +132,12 @@ void Award(char *commandNumber, char command, char *param1, tList* list)
             printf("+ Error: Award not possible\n");
         }
         else {
-            printf("********************\nAward: console %s bidder %s brand %s price %.2f\n", item.consoleId, item.bidStack.data->bidder, enumtochar(item.consoleBrand), item.bidStack.data->consolePrice);
+            printf("Award: console %s bidder %s brand %s price %.2f\n", item.consoleId, item.bidStack.data->bidder, enumtochar(item.consoleBrand), item.bidStack.data->consolePrice);
             while (isEmptyStack(item.bidStack)!=true) {//Elimina las pujas
                 pop(&item.bidStack);
             }
             item.bidCounter=0;
+            updateItem(item,Q,list);
             deleteAtPosition(Q,list);
         }
     }
@@ -150,7 +152,7 @@ void InvalidateBids(char *commandNumber, char command, tList* list){//Elimina co
         int count=0;//Contador
         while (p!=NULL){//Recorre la lista eliminando las consolas con demasiadas pujas
             if (p->data.bidCounter>mean2){
-                printf("* InvalidateBids: console %s seller %s brand %s price %f bids %d average bids %.2f\n",p->data.consoleId, p->data.seller, enumtochar(p->data.consoleBrand), p->data.consolePrice, p->data.bidCounter, mean(*list));
+                printf("* InvalidateBids: console %s seller %s brand %s price %.2f bids %d average bids %.2f\n",p->data.consoleId, p->data.seller, enumtochar(p->data.consoleBrand), p->data.consolePrice, p->data.bidCounter, mean(*list));
                 while (isEmptyStack(p->data.bidStack)!=true) {//Elimina las pujas
                     pop(&p->data.bidStack);
                 }
@@ -213,7 +215,7 @@ void Remove(char *commandNumber, char command, tList* list){
     tPosL p=first(*list);
     for (p;next(p,*list)!=LNULL;p=next(p,*list)){
         if (p->data.bidCounter==0) {
-            printf("Removing console %s seller %s brand %s price %f bids %d",p->data.consoleId, p->data.seller, enumtochar(p->data.consoleBrand), p->data.consolePrice, p->data.bidCounter);
+            printf("Removing console %s seller %s brand %s price %.2f bids %d\n",p->data.consoleId, p->data.seller, enumtochar(p->data.consoleBrand), p->data.consolePrice, p->data.bidCounter);
             deleteAtPosition(p,list);
         }
     }
