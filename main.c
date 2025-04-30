@@ -79,13 +79,10 @@ void Delete(char *commandNumber, char command, char *param1, tList *list){
         while (isEmptyStack(item1.bidStack)!=true) {//Elimina el bid stack
             pop(&item1.bidStack);
         }
+        printf("* Delete: console %s seller %s brand %s price %.2f bids %d\n",item1.consoleId,item1.seller,enumtochar(item1.consoleBrand), item1.consolePrice,item1.bidCounter);
         item1.bidCounter=0;
         updateItem(item1,Q,list);
         deleteAtPosition(Q,list);
-        if (findItem(param1,*list)==LNULL) {
-            printf("* Delete: console %s seller %s brand %s price %.2f bids %d\n",item1.consoleId,item1.seller,enumtochar(item1.consoleBrand), item1.consolePrice,item1.bidCounter);
-        }
-        else printf("+ Error: Delete not possible\n");
     }
     else printf("+ Error: Delete not possible\n");
 }
@@ -98,20 +95,22 @@ void Bid(char *commandNumber, char command, char *param1, char *param2, char *pa
 
     if(Q!=LNULL){
         tItemL itemL=getItem(Q,*list);//"Extraemos" el item para actualizarlo
-        tConsolePrice topbid=itemL.consolePrice;
+        tConsolePrice topbid=itemL.consolePrice;//Variable para almacenar la máxima puja
         if(isEmptyStack(itemL.bidStack)!=true){
             topbid=peek(itemL.bidStack).consolePrice;//Máxima puja si existe
             }
-        itemL.bidStack.data->consolePrice=atof(param3);
-        strcpy(itemL.bidStack.data->bidder,param2);
+        tItemS itemS;//Tipo stack para actualizar el itemL
+        itemS.consolePrice=atof(param3);
+        strcpy(itemS.bidder,param2);
         if (itemL.seller!=param2) {
-            if(itemL.bidStack.data->consolePrice>topbid){
-                topbid=itemL.bidStack.data->consolePrice;
-                itemL.bidCounter++;
-                updateItem(itemL,Q,list);
-                printf("* Bid: console %s bidder %s brand %s price %.2f bids %d\n", itemL.consoleId, itemL.bidStack.data->bidder, enumtochar(itemL.consoleBrand), topbid, itemL.bidCounter);
-
-
+            if(itemS.consolePrice>topbid){
+                topbid=itemS.consolePrice;
+                if (push(itemS,&itemL.bidStack)==true){
+                    itemL.bidCounter++;
+                    updateItem(itemL,Q,list);
+                    printf("* Bid: console %s bidder %s brand %s price %.2f bids %d\n", itemL.consoleId, itemL.bidStack.data->bidder, enumtochar(itemL.consoleBrand), itemL.bidStack.data->consolePrice, itemL.bidCounter);
+                }
+                else printf("+ Error: Bid not possible\n");
             }
             else printf("+ Error: Bid not possible\n");
         }
