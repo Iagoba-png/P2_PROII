@@ -180,7 +180,7 @@ void Stats(char *commandNumber, char command, tList* list) {//Imprime un resumen
         for(p;p!=LNULL;p=next(p,*list)){//Recorro la lista
             tItemL item=getItem(p,*list);//Variable para usar en cada iteración del "for"
             if (isEmptyStack(item.bidStack)!=true){//Imprimo la lista con un mensaje diferente dependiendo de si tiene pujas
-                printf("Console %s seller %s brand %s price %.2f bids %d top bidder %s\n",item.consoleId,item.seller,enumtochar(item.consoleBrand),item.consolePrice,item.bidCounter,item.bidStack.data->bidder);
+                printf("Console %s seller %s brand %s price %.2f bids %d top bidder %s\n",item.consoleId,item.seller,enumtochar(item.consoleBrand),item.consolePrice,item.bidCounter,peek(item.bidStack).bidder);
             }
             else printf("Console %s seller %s brand %s price %.2f. No bids\n",item.consoleId,item.seller,enumtochar(item.consoleBrand),item.consolePrice);
 
