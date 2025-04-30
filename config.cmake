@@ -3,6 +3,6 @@
 #set(input bid.txt)
 #set(input delete.txt)
 #set(input award.txt)
-#set(input invalidate.txt)
-set(input remove.txt)
+set(input invalidate.txt)
+#set(input remove.txt)
 
