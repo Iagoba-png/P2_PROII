@@ -83,7 +83,7 @@ void Delete(char *commandNumber, char command, char *param1, tList *list){
         updateItem(item1,Q,list);
         deleteAtPosition(Q,list);
         if (findItem(param1,*list)==LNULL) {
-            printf("Delete: console %s seller %s brand %s price %.2f bids %d\n",item1.consoleId,item1.seller,enumtochar(item1.consoleBrand), item1.consolePrice,item1.bidCounter);
+            printf("* Delete: console %s seller %s brand %s price %.2f bids %d\n",item1.consoleId,item1.seller,enumtochar(item1.consoleBrand), item1.consolePrice,item1.bidCounter);
         }
         else printf("+ Error: Delete not possible\n");
     }
@@ -130,7 +130,7 @@ void Award(char *commandNumber, char command, char *param1, tList* list)
             printf("+ Error: Award not possible\n");
         }
         else {
-            printf("Award: console %s bidder %s brand %s price %.2f\n", item.consoleId, item.bidStack.data->bidder, enumtochar(item.consoleBrand), item.bidStack.data->consolePrice);
+            printf("* Award: console %s bidder %s brand %s price %.2f\n", item.consoleId, item.bidStack.data->bidder, enumtochar(item.consoleBrand), item.bidStack.data->consolePrice);
             while (isEmptyStack(item.bidStack)!=true) {//Elimina las pujas
                 pop(&item.bidStack);
             }
