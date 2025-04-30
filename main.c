@@ -99,14 +99,18 @@ void Bid(char *commandNumber, char command, char *param1, char *param2, char *pa
         if(isEmptyStack(itemL.bidStack)!=true){
             topbid=peek(itemL.bidStack).consolePrice;//Máxima puja si existe
             }
-        itemL.bidStack.data->consolePrice=atof(param3);
-        strcpy(itemL.bidStack.data->bidder,param2);
+        tItemS itemS;//Tipo stack para actualizar el itemL
+        itemS.consolePrice=atof(param3);
+        strcpy(itemS.bidder,param2);
         if (itemL.seller!=param2) {
-            if(itemL.bidStack.data->consolePrice>topbid){
-                topbid=itemL.consolePrice;
-                itemL.bidCounter++;
-                updateItem(itemL,Q,list);
-                printf("* Bid: console %s bidder %s brand %s price %.2f bids %d\n", itemL.consoleId, itemL.bidStack.data->bidder, enumtochar(itemL.consoleBrand), itemL.bidStack.data->consolePrice, itemL.bidCounter);
+            if(itemS.consolePrice>topbid){
+                topbid=itemS.consolePrice;
+                if (push(itemS,&itemL.bidStack)==true){
+                    itemL.bidCounter++;
+                    updateItem(itemL,Q,list);
+                    printf("* Bid: console %s bidder %s brand %s price %.2f bids %d\n", itemL.consoleId, peek(itemL.bidStack).bidder, enumtochar(itemL.consoleBrand), peek(itemL.bidStack).consolePrice, itemL.bidCounter);
+                }
+                else printf("+ Error: Bid not possible\n");
             }
             else printf("+ Error: Bid not possible\n");
         }
