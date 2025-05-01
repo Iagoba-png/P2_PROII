@@ -4,7 +4,7 @@
  * AUTHOR 1: Iago Bescansa Alcoba LOGIN 1: iago.alcoba
  * AUTHOR 2: Daniel Marrero Sánchez LOGIN 2: daniel.marrero.sanchez
  * GROUP: 1.2
- * DATE: 25 / 04 / 2025
+ * DATE: 30 / 04 / 2025
  */
 
 #ifndef CONSOLE_LIST_H

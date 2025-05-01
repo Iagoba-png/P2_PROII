@@ -4,7 +4,7 @@
  * AUTHOR 1: Iago Bescansa Alcoba LOGIN 1: iago.alcoba
  * AUTHOR 2: Daniel Marrero Sánchez LOGIN 2: daniel.marrero.sanchez
  * GROUP: 1.2
- * DATE: 25 / 04 / 2025
+ * DATE: 30 / 04 / 2025
  */
 
 #include "console_list.h"
@@ -69,13 +69,13 @@ void updateItem( tItemL d, tPosL p, tList* L) {//Actuliza una posición
 
 
 bool insertItem (tItemL d, tList* L){
-  tPosL Q;
-  Q = findItem(d.consoleId,*L);
+  tPosL Q;//Puntero de comprobación
+  Q = findItem(d.consoleId,*L);//Comprobación de que no se repite el id a insertar
 
   if(Q==LNULL) {
-    tPosL p=LNULL;
-    p=nextOrderId(d.consoleId,*L);
-    tPosL M;
+    tPosL p=LNULL;//Puntero para insertar el item
+    p=nextOrderId(d.consoleId,*L);//Posición donde insertar el item
+    tPosL M;//Apunta a la nueva casilla
     M=LNULL;
     M=malloc(sizeof(tNode));//Creación de una nueva casilla
     M->data=d;

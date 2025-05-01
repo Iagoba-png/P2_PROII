@@ -4,7 +4,7 @@
  * AUTHOR 1: Iago Bescansa Alcoba LOGIN 1: iago.alcoba
  * AUTHOR 2: Daniel Marrero Sánchez LOGIN 2: daniel.marrero.sanchez
  * GROUP: 1.2
- * DATE: 25 / 04 / 2025
+ * DATE: 30 / 04 / 2025
  */
 
 #include <stdio.h>
@@ -30,8 +30,8 @@ float priceRatio(tItemL d){//Devuelve la diferencia porcentual entre el precio o
 float mean(tList list){//Devuelve la media del precio de pujas de la lista
     tPosL p=list;
     float sum=0;//suma total de las pujas
-    float count=0;
-    while (p!=NULL){
+    float count=0;//Numero total de pujas
+    while (p!=NULL){//Recorre la lista para recabar los datos
         sum+=p->data.bidCounter;
         count++;
         p=next(p,list);
@@ -39,7 +39,7 @@ float mean(tList list){//Devuelve la media del precio de pujas de la lista
     return sum/count;
 }
 
-char *enumtochar(tConsoleBrand b) {//Convierte del tipo enum a cadena de caracteres
+char *enumtochar(tConsoleBrand b) {//Convierte del tipo consoleBrand a cadena de caracteres
     if (b==nintendo) {
         return "nintendo";
     }
@@ -59,7 +59,7 @@ void New(char *commandNumber, char command, char *param1, char *param2, char *pa
     }
     item.consolePrice=atof(param4);
     item.bidCounter=0;
-    createEmptyStack(&item.bidStack);
+    createEmptyStack(&item.bidStack);//Inicializar la pila de pujas
 
     if (insertItem(item, list)==true) {  //Muestra la nueva consola en caso de ser posible.
         printf("* New: console %s seller %s brand %s price %s\n",param1, param2, param3, param4);
@@ -105,7 +105,7 @@ void Bid(char *commandNumber, char command, char *param1, char *param2, char *pa
         if (itemL.seller!=param2) {
             if(itemS.consolePrice>topbid){
                 topbid=itemS.consolePrice;
-                if (push(itemS,&itemL.bidStack)==true){
+                if (push(itemS,&itemL.bidStack)==true){//Actualiza la pila del item a actualizar
                     itemL.bidCounter++;
                     updateItem(itemL,Q,list);
                     printf("* Bid: console %s bidder %s brand %s price %.2f bids %d\n", itemL.consoleId, peek(itemL.bidStack).bidder, enumtochar(itemL.consoleBrand), peek(itemL.bidStack).consolePrice, itemL.bidCounter);
@@ -119,16 +119,15 @@ void Bid(char *commandNumber, char command, char *param1, char *param2, char *pa
     else printf("+ Error: Bid not possible\n");
 }
 
-void Award(char *commandNumber, char command, char *param1, tList* list)
-{
+void Award(char *commandNumber, char command, char *param1, tList* list){
     printf("********************\n%s %c: console %s\n", commandNumber, command, param1);
     tPosL Q=findItem(param1, *list);//Variable que apunta al item o indica que no existe
     if(Q!=LNULL){
-        tItemL item=getItem(Q,*list);
-        if (findItem(item.consoleId,*list)==LNULL||item.bidCounter==0) {
+        tItemL item=getItem(Q,*list);//Item a eliminar
+        if (item.bidCounter==0) {//No funciona si no tiene pujas
             printf("+ Error: Award not possible\n");
         }
-        else {
+        else {//Vacia el bidStack y elimina el item
             printf("* Award: console %s bidder %s brand %s price %.2f\n", item.consoleId, item.bidStack.data->bidder, enumtochar(item.consoleBrand), item.bidStack.data->consolePrice);
             while (isEmptyStack(item.bidStack)!=true) {//Elimina las pujas
                 pop(&item.bidStack);
